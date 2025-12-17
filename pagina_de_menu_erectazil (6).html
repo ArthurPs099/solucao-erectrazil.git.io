@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erectazil | Planos de Tratamento</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      color: #0f172a;
+      padding: 0 0 80px;
+      background: #f8fbff;
+      overflow-x: hidden;
+    }
+
+    /* FUNDO DECORATIVO */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%);
+      z-index: -1;
+    }
+    body::before { top: -150px; left: -150px; }
+    body::after { bottom: -150px; right: -150px; }
+
+    h1, h2 {
+      font-family: 'Montserrat', 'Arial Black', sans-serif;
+      color: #0b3a8f;
+      letter-spacing: -0.5px;
+    }
+
+    /* SESSÕES */
+    .section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      align-items: center;
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto 120px;
+      padding: 120px 24px;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section.alt {
+      background: linear-gradient(180deg, #eef4ff, #f8fbff);
+      border-radius: 40px;
+    }
+
+    .text h1 {
+      font-size: 3rem;
+      margin-bottom: 22px;
+      line-height: 1.1;
+    }
+
+    .text h2 {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+    }
+
+    .text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 18px;
+      color: #334155;
+    }
+
+    .muted { color: #475569; }
+
+    .media img {
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(37,99,235,0.25);
+    }
+
+    /* CTA */
+    .cta {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 28px;
+      background: linear-gradient(90deg, #2563eb, #1e40af);
+      color: #fff;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(37,99,235,0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(37,99,235,0.5);
+    }
+
+    /* PLANOS */
+    .plans-title {
+      text-align: center;
+      font-size: 2.4rem;
+      margin-bottom: 40px;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .plan {
+      background: #ffffff;
+      padding: 28px 20px;
+      border-radius: 24px;
+      text-align: center;
+      text-decoration: none;
+      color: #0f172a;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      transition: transform 0.25s ease;
+    }
+
+    .plan strong { font-size: 1.5rem; display: block; margin-bottom: 6px; }
+    .plan span { color: #475569; }
+
+    .plan:hover { transform: translateY(-6px); }
+
+    .highlight {
+      border: 3px solid #2563eb;
+      position: relative;
+    }
+
+    .highlight::before {
+      content: 'MAIS ESCOLHIDO';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    @media (max-width: 600px) {
+      .section { padding: 80px 20px; gap: 32px; }
+      .text h1 { font-size: 2.4rem; }
+      .text h2 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SESSÃO 1 -->
+  <section class="copy section">
+    <div class="text">
+      <h1>Confiança começa de dentro para fora</h1>
+      <p>
+        Desempenho não é apenas um momento. É resultado de equilíbrio físico, mental e emocional.
+        Quando esses fatores se alinham, a confiança aparece — naturalmente.
+      </p>
+      <p>
+        <strong>Erectazil</strong> foi pensado para apoiar a rotina masculina com consistência,
+        ajudando o organismo a trabalhar melhor ao longo do tempo.
+      </p>
+    </div>
+    <div class="media">
+      <img src="erectazil-produto-1.png" alt="Erectazil - Frasco do produto" />
+    </div>
+  </section>
+
+  <!-- SESSÃO 2 -->
+  <section class="copy section alt">
+    <div class="media">
+      <img src="erectazil-uso-diario.png" alt="Erectazil - Uso diário com água" />
+    </div>
+    <div class="text">
+      <h2>Um hábito simples. Um impacto real.</h2>
+      <p>
+        Nada de protocolos complicados ou soluções imediatistas.
+        O uso diário e disciplinado cria as condições ideais para evolução contínua.
+      </p>
+      <p>
+        Erectazil se encaixa facilmente na sua rotina, promovendo bem-estar e suporte à saúde sexual
+        masculina de forma prática e discreta.
+      </p>
+    </div>
+  </section>
+
+  <!-- SESSÃO 3 -->
+  <section class="copy section">
+    <div class="text">
+      <h2>Resultados que refletem no seu estilo de vida</h2>
+      <p>
+        Quando o corpo responde melhor, tudo muda: postura, atitude e conexão.
+        A confiança se reflete nos relacionamentos e na forma como você vive o dia a dia.
+      </p>
+      <p class="muted">
+        O foco não é promessa milagrosa. É constância, cuidado e progresso visível ao longo do tempo.
+      </p>
+    </div>
+    <div class="media">
+      <img src="erectazil-estilo-de-vida.png" alt="Erectazil - Estilo de vida e intimidade" />
+    </div>
+  </section>
+
+  <!-- PLANOS -->
+  <h2 class="plans-title">Escolha o seu Plano — Erectazil</h2>
+
+  <div class="menu">
+    <a class="plan" href="https://ev.braip.com/checkout/plawevo0/cheevqm9?pl=plawevo0&ck=cheevqm9&af=afixjmllpm&currency=BRL" target="_blank">
+      <strong>1 Mês</strong>
+      <span>Tratamento inicial</span>
+    </a>
+
+    <a class="plan highlight" href="https://ev.braip.com/ref?pl=pla08ney&ck=cheevqm9&af=afixjmllpm" target="_blank">
+      <strong>3 Meses</strong>
+      <span>Plano mais escolhido</span>
+    </a>
+
+    <a class="plan" href="https://ev.braip.com/ref?pl=plagyzmx&ck=cheevqm9&af=afixjmllpm" target="_blank">
+      <strong>6 Meses</strong>
+      <span>Resultados contínuos</span>
+    </a>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+
+</body>
+</html>
