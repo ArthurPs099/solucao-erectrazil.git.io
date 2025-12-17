@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erectazil | Planos de Tratamento</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #ffffff;
+      padding: 24px 16px 60px;
+      background: linear-gradient(120deg, #0a1f44, #0b4aa2, #0f82ff);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h1, h2 {
+      color: #e0f2ff;
+    }
+    .copy {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+    .copy p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      color: #e6f1ff;
+    }
+    .muted {
+      color: #c7dbff;
+      font-size: 0.95rem;
+    }
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto 50px;
+    }
+    .images img {
+      width: 100%;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .plans-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 420px;
+      margin: 0 auto 40px;
+    }
+    .plan {
+      background: linear-gradient(180deg, #0f82ff, #0b4aa2);
+      padding: 18px;
+      border-radius: 14px;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .plan:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    }
+    .plan strong {
+      font-size: 1.4rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .plan span {
+      font-size: 0.95rem;
+      color: #dbeafe;
+    }
+    .highlight {
+      border: 2px solid #60a5fa;
+      background: linear-gradient(180deg, #1e40af, #0f82ff);
+    }
+    .trust {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #e0f2ff;
+    }
+    .trust span {
+      display: inline-block;
+      margin: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO / COPY -->
+  <section class="copy">
+    <h1>Redescubra sua confiança. No seu ritmo.</h1>
+    <p>
+      A saúde sexual masculina vai muito além do desempenho. Ela influencia sua autoestima, sua energia,
+      seus relacionamentos e a forma como você se enxerga todos os dias.
+    </p>
+    <p>
+      O <strong>Erectazil</strong> foi desenvolvido para homens que desejam retomar o controle da própria
+      vitalidade de forma prática, discreta e contínua. Um suplemento encapsulado pensado para apoiar o
+      equilíbrio do organismo e promover mais confiança ao longo do tempo.
+    </p>
+    <p class="muted">
+      Sem soluções imediatistas ou promessas irreais. Aqui o foco é constância, cuidado e evolução progressiva.
+      Escolha o plano ideal para sua rotina e dê o primeiro passo.
+    </p>
+  </section>
+
+  <!-- IMAGENS / ILUSTRAÇÃO -->
+  <section class="images">
+    <img src="erectazil-produto-1.png" alt="Erectazil - Frasco do produto" />
+    <img src="erectazil-uso-diario.png" alt="Erectazil - Uso diário com água" />
+    <img src="erectazil-estilo-de-vida.png" alt="Erectazil - Estilo de vida e intimidade" />
+  </section>
+
+  <!-- PLANOS -->
+  <h2 class="plans-title">Escolha o seu Plano — Erectazil</h2>
+
+  <div class="menu">
+    <a class="plan" href="https://ev.braip.com/checkout/plawevo0/cheevqm9?pl=plawevo0&ck=cheevqm9&af=afixjmllpm&currency=BRL" target="_blank">
+      <strong>1 Mês</strong>
+      <span>Tratamento inicial</span>
+    </a>
+
+    <a class="plan highlight" href="https://ev.braip.com/ref?pl=pla08ney&ck=cheevqm9&af=afixjmllpm" target="_blank">
+      <strong>3 Meses</strong>
+      <span>Plano mais escolhido</span>
+    </a>
+
+    <a class="plan" href="https://ev.braip.com/ref?pl=plagyzmx&ck=cheevqm9&af=afixjmllpm" target="_blank">
+      <strong>6 Meses</strong>
+      <span>Resultados contínuos</span>
+    </a>
+  </div>
+
+</body>
+</html>
