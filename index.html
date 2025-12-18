@@ -3,49 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Erectazil | Planos de Tratamento</title>
+  <title>Erectazil | Saúde Sexual Masculina</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <meta name="description" content="Erectazil é um suplemento encapsulado desenvolvido para apoiar a saúde sexual masculina com constância, confiança e discrição." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: #0f172a;
-      padding: 0 0 80px;
       background: #f8fbff;
       overflow-x: hidden;
     }
 
-    /* FUNDO DECORATIVO */
+    /* ELEMENTOS GRÁFICOS DE FUNDO */
     body::before, body::after {
       content: '';
       position: fixed;
-      width: 500px;
-      height: 500px;
+      width: 520px;
+      height: 520px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%);
+      background: radial-gradient(circle, rgba(37,99,235,0.18), transparent 70%);
       z-index: -1;
+      pointer-events: none;
     }
-    body::before { top: -150px; left: -150px; }
-    body::after { bottom: -150px; right: -150px; }
+    body::before { top: -180px; left: -180px; }
+    body::after { bottom: -180px; right: -180px; }
 
     h1, h2 {
       font-family: 'Montserrat', 'Arial Black', sans-serif;
       color: #0b3a8f;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.6px;
     }
 
     /* SESSÕES */
     .section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      align-items: center;
-      gap: 48px;
       max-width: 1100px;
-      margin: 0 auto 120px;
+      margin: 0 auto 140px;
       padding: 120px 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      align-items: center;
+      gap: 56px;
       opacity: 0;
-      transform: translateY(60px);
-      transition: all 0.8s ease;
+      transform: translateY(70px);
+      transition: all 0.9s ease;
     }
 
     .section.visible {
@@ -55,85 +63,100 @@
 
     .section.alt {
       background: linear-gradient(180deg, #eef4ff, #f8fbff);
-      border-radius: 40px;
+      border-radius: 48px;
     }
 
     .text h1 {
-      font-size: 3rem;
-      margin-bottom: 22px;
+      font-size: 3.2rem;
       line-height: 1.1;
+      margin-bottom: 24px;
     }
 
     .text h2 {
-      font-size: 2.2rem;
-      margin-bottom: 18px;
+      font-size: 2.4rem;
+      margin-bottom: 20px;
     }
 
     .text p {
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: 1.12rem;
+      line-height: 1.85;
       margin-bottom: 18px;
       color: #334155;
     }
 
-    .muted { color: #475569; }
+    .muted {
+      color: #475569;
+      font-size: 1.02rem;
+    }
 
     .media img {
       width: 100%;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(37,99,235,0.25);
+      border-radius: 28px;
+      box-shadow: 0 26px 60px rgba(37,99,235,0.25);
     }
 
     /* CTA */
     .cta {
       display: inline-block;
-      margin-top: 20px;
-      padding: 14px 28px;
+      margin-top: 26px;
+      padding: 16px 34px;
       background: linear-gradient(90deg, #2563eb, #1e40af);
       color: #fff;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 600;
-      box-shadow: 0 12px 30px rgba(37,99,235,0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 14px 36px rgba(37,99,235,0.45);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .cta:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 40px rgba(37,99,235,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(37,99,235,0.55);
     }
 
     /* PLANOS */
     .plans-title {
       text-align: center;
-      font-size: 2.4rem;
-      margin-bottom: 40px;
+      font-size: 2.6rem;
+      margin-bottom: 44px;
+      padding: 0 16px;
     }
 
     .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      max-width: 900px;
-      margin: 0 auto 60px;
+      max-width: 960px;
+      margin: 0 auto 80px;
       padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
     }
 
     .plan {
       background: #ffffff;
-      padding: 28px 20px;
-      border-radius: 24px;
+      padding: 32px 24px;
+      border-radius: 28px;
       text-align: center;
       text-decoration: none;
       color: #0f172a;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-      transition: transform 0.25s ease;
+      box-shadow: 0 26px 60px rgba(0,0,0,0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .plan strong { font-size: 1.5rem; display: block; margin-bottom: 6px; }
-    .plan span { color: #475569; }
+    .plan:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 34px 70px rgba(0,0,0,0.18);
+    }
 
-    .plan:hover { transform: translateY(-6px); }
+    .plan strong {
+      font-size: 1.6rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .plan span {
+      font-size: 1rem;
+      color: #475569;
+    }
 
     .highlight {
       border: 3px solid #2563eb;
@@ -143,38 +166,56 @@
     .highlight::before {
       content: 'MAIS ESCOLHIDO';
       position: absolute;
-      top: -14px;
+      top: -16px;
       left: 50%;
       transform: translateX(-50%);
       background: #2563eb;
       color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 6px 14px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 6px 16px;
       border-radius: 999px;
+      letter-spacing: 0.4px;
     }
 
-    @media (max-width: 600px) {
-      .section { padding: 80px 20px; gap: 32px; }
-      .text h1 { font-size: 2.4rem; }
-      .text h2 { font-size: 1.9rem; }
+    /* BLOCO DE CONFIANÇA */
+    .trust {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .trust span {
+      display: inline-block;
+      margin: 10px 14px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+      .section { padding: 90px 20px; margin-bottom: 100px; gap: 36px; }
+      .text h1 { font-size: 2.6rem; }
+      .text h2 { font-size: 2.1rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- SESSÃO 1 -->
-  <section class="copy section">
+  <section class="section">
     <div class="text">
       <h1>Confiança começa de dentro para fora</h1>
       <p>
-        Desempenho não é apenas um momento. É resultado de equilíbrio físico, mental e emocional.
-        Quando esses fatores se alinham, a confiança aparece — naturalmente.
+        A saúde sexual masculina é reflexo de equilíbrio, constância e cuidado com o próprio corpo.
+        Quando esses fatores se alinham, a confiança surge de forma natural — sem pressão.
       </p>
       <p>
-        <strong>Erectazil</strong> foi pensado para apoiar a rotina masculina com consistência,
-        ajudando o organismo a trabalhar melhor ao longo do tempo.
+        <strong>Erectazil</strong> foi desenvolvido para homens que desejam apoiar sua vitalidade
+        de maneira prática, discreta e contínua.
       </p>
+      <a href="#planos" class="cta">Ver opções de tratamento</a>
     </div>
     <div class="media">
       <img src="erectazil-produto-1.png" alt="Erectazil - Frasco do produto" />
@@ -182,42 +223,93 @@
   </section>
 
   <!-- SESSÃO 2 -->
-  <section class="copy section alt">
+  <section class="section alt">
     <div class="media">
-      <img src="erectazil-uso-diario.png" alt="Erectazil - Uso diário com água" />
+      <img src="erectazil-uso-diario.png" alt="Erectazil - Uso diário" />
     </div>
     <div class="text">
       <h2>Um hábito simples. Um impacto real.</h2>
       <p>
-        Nada de protocolos complicados ou soluções imediatistas.
-        O uso diário e disciplinado cria as condições ideais para evolução contínua.
+        Nada de soluções imediatistas ou rotinas complicadas.
+        A evolução acontece com disciplina e consistência ao longo do tempo.
       </p>
       <p>
-        Erectazil se encaixa facilmente na sua rotina, promovendo bem-estar e suporte à saúde sexual
-        masculina de forma prática e discreta.
+        O uso diário se encaixa facilmente na sua rotina,
+        ajudando a criar as condições ideais para o bem-estar masculino.
       </p>
+      <a href="#planos" class="cta">Quero incluir na minha rotina</a>
     </div>
   </section>
 
   <!-- SESSÃO 3 -->
-  <section class="copy section">
+  <section class="section">
     <div class="text">
       <h2>Resultados que refletem no seu estilo de vida</h2>
       <p>
         Quando o corpo responde melhor, tudo muda: postura, atitude e conexão.
-        A confiança se reflete nos relacionamentos e na forma como você vive o dia a dia.
+        A confiança se reflete nos relacionamentos e no dia a dia.
       </p>
       <p class="muted">
-        O foco não é promessa milagrosa. É constância, cuidado e progresso visível ao longo do tempo.
+        Sem promessas milagrosas. O foco é progresso contínuo e cuidado real.
       </p>
+      <a href="#planos" class="cta">Escolher meu plano</a>
     </div>
     <div class="media">
-      <img src="erectazil-estilo-de-vida.png" alt="Erectazil - Estilo de vida e intimidade" />
+      <img src="erectazil-estilo-de-vida.png" alt="Erectazil - Estilo de vida" />
+    </div>
+  </section>
+
+      <!-- AVALIAÇÕES -->
+  <section class="section alt">
+    <div class="text">
+      <h2>O que dizem quem já usa</h2>
+      <p class="muted">Avaliações reais de clientes que incluíram Erectazil na rotina.</p>
+
+      <div style="display:flex;align-items:center;gap:18px;margin:22px 0 10px;">
+        <div style="font-family:'Montserrat',sans-serif;font-size:4.2rem;color:#1e40af;line-height:1;">4,6/5</div>
+        <div>
+          <div style="font-size:1.1rem;color:#334155;">Avaliação média</div>
+          <div style="color:#f59e0b;font-size:1.2rem;">★★★★★</div>
+        </div>
+      </div>
+
+      <a href="#planos" class="cta">Quero experimentar</a>
+    </div>
+
+    <div class="media">
+      <div style="display:grid;gap:18px;">
+        <div style="background:#ffffff;border-radius:22px;padding:18px 20px;box-shadow:0 18px 40px rgba(0,0,0,0.12);display:flex;gap:14px;">
+          <div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">SC</div>
+          <div>
+            <strong>Sandro C********</strong>
+            <div style="color:#f59e0b;">★★★★☆</div>
+            <p style="margin-top:6px;color:#334155;">Excelente produto! Obtive resultados com menos de 3 semanas e estou me sentindo muito mais viril.</p>
+          </div>
+        </div>
+
+        <div style="background:#ffffff;border-radius:22px;padding:18px 20px;box-shadow:0 18px 40px rgba(0,0,0,0.12);display:flex;gap:14px;">
+          <div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#0369a1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">AS</div>
+          <div>
+            <strong>Alexandre S****</strong>
+            <div style="color:#f59e0b;">★★★★★</div>
+            <p style="margin-top:6px;color:#334155;">Minha esposa não permite mais eu ficar um mês sem esse produto 😂😂😂 Recomendo!!!</p>
+          </div>
+        </div>
+
+        <div style="background:#ffffff;border-radius:22px;padding:18px 20px;box-shadow:0 18px 40px rgba(0,0,0,0.12);display:flex;gap:14px;">
+          <div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">OF</div>
+          <div>
+            <strong>Onofre F******</strong>
+            <div style="color:#f59e0b;">★★★★☆</div>
+            <p style="margin-top:6px;color:#334155;">Não botava fé, comprei descrente, mas com +/- 1 mês e meio tomando regularmente voltei completamente à ativa! Recomendo e já encomendei mais!</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- PLANOS -->
-  <h2 class="plans-title">Escolha o seu Plano — Erectazil</h2>
+  <h2 id="planos" class="plans-title">Escolha seu plano de tratamento</h2>
 
   <div class="menu">
     <a class="plan" href="https://ev.braip.com/checkout/plawevo0/cheevqm9?pl=plawevo0&ck=cheevqm9&af=afixjmllpm&currency=BRL" target="_blank">
@@ -236,6 +328,15 @@
     </a>
   </div>
 
+  <!-- CONFIANÇA -->
+  <div class="trust">
+    <span>✔ Compra 100% segura</span>
+    <span>✔ Pagamento protegido</span>
+    <span>✔ Envio discreto</span>
+    <span>✔ Site com SSL</span>
+  </div>
+
+  <!-- ANIMAÇÃO NO SCROLL -->
   <script>
     const sections = document.querySelectorAll('.section');
 
@@ -245,9 +346,7 @@
           entry.target.classList.add('visible');
         }
       });
-    }, {
-      threshold: 0.2
-    });
+    }, { threshold: 0.25 });
 
     sections.forEach(section => observer.observe(section));
   </script>
