@@ -142,20 +142,21 @@ const PROMO=10*60*1000, COOLDOWN=12*60*60*1000;
 const formatTime=(ms,h)=>{const t=Math.floor(ms/1000),hh=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;return h?`${hh.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`:`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`};
 
 function startTimer(end,isPromo){
-  if(isPromo) promo.innerHTML='PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO <span id="timerTop"></span>'; else promo.innerHTML='PROMOÇÃO ENCERRADA';
+  // Atualiza topo sem remover span
+  promo.firstChild.nodeValue = isPromo ? "PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO " : "PROMOÇÃO ENCERRADA ";
   const interval=setInterval(()=>{
     const rem=end-Date.now();
     if(rem<=0){
       clearInterval(interval);
       if(isPromo){
-        promo.innerHTML='PROMOÇÃO ENCERRADA';
+        promo.firstChild.nodeValue = "PROMOÇÃO ENCERRADA ";
         bigCopy.innerText='Nova promoção em:';
         const cooldownEnd=Date.now()+COOLDOWN;
         localStorage.setItem('timerEnd',cooldownEnd);
         localStorage.setItem('isPromo','false');
         startTimer(cooldownEnd,false);
       }else{
-        promo.innerHTML='PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO <span id="timerTop"></span>';
+        promo.firstChild.nodeValue = "PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
         bigCopy.innerText='Oferta especial disponível por';
         const promoEnd=Date.now()+PROMO;
         localStorage.setItem('timerEnd',promoEnd);
