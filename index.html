@@ -64,6 +64,7 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 .plan .old-price{font-size:1rem;color:#94a3b8;text-decoration:line-through;margin-left:8px}
 .highlight::after{content:'Maior custo-benefício';position:absolute;top:-12px;right:-12px;background:#2563eb;color:#fff;font-size:0.9rem;padding:6px 10px;border-radius:12px;font-weight:600}
 .highlight{border:3px solid #2563eb}
+.installment-msg{text-align:center;color:#1e40af;font-weight:700;font-size:1.1rem;margin-top:20px}
 .trust{text-align:center;color:#334155;padding-bottom:40px}
 .trust span{margin:10px 14px;display:inline-block}
 </style>
@@ -124,19 +125,21 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 <!-- PLANOS -->
 <h2 id="planos" class="plans-title">Escolha seu plano</h2>
 <div class="menu">
-  <a class="plan" href="#" target="_blank">
+  <a class="plan" href="https://ev.braip.com/checkout/plawevo0/cheevqm9?pl=plawevo0&ck=cheevqm9&af=afixjmllpm&currency=BRL" target="_blank">
     1 Mês
     <div class="price">R$ 197,00 <span class="old-price">R$ 219,00</span></div>
   </a>
-  <a class="plan highlight" href="#" target="_blank">
+  <a class="plan highlight" href="https://ev.braip.com/checkout/pla08ney/cheevqm9?pl=pla08ney&ck=cheevqm9&af=afixjmllpm&currency=BRL" target="_blank">
     3 Meses
     <div class="price">R$ 397,00 <span class="old-price">R$ 441,00</span></div>
   </a>
-  <a class="plan" href="#" target="_blank">
+  <a class="plan" href="https://ev.braip.com/ref?pl=plagyzmx&ck=cheevqm9&af=afixjmllpm" target="_blank">
     6 Meses
     <div class="price">R$ 697,00 <span class="old-price">R$ 774,00</span></div>
   </a>
 </div>
+
+<div class="installment-msg">💳 Parcelamento disponível em até 12x sem juros!</div>
 
 <div class="trust">
   <span>✔ Compra segura</span><span>✔ Envio discreto</span><span>✔ Pagamento protegido</span>
@@ -161,7 +164,7 @@ const bigTimer=document.getElementById('bigTimer');
 const PROMO_DURATION=10*60*1000; // 10 min
 const COOLDOWN_DURATION=12*60*60*1000; // 12h
 
-function formatTime(ms, isCooldown){
+function formatTime(ms,isCooldown){
   const totalSec=Math.floor(ms/1000);
   const h=Math.floor(totalSec/3600);
   const m=Math.floor((totalSec%3600)/60);
@@ -195,6 +198,7 @@ function startTimer(endTime,isPromo){
     tTop.textContent=formatTime(remaining,showHours);
     tPlan.textContent=formatTime(remaining,showHours);
 
+    // tick a cada segundo
     tick.volume=0.12;
     tick.currentTime=0;
     tick.play().catch(()=>{});
