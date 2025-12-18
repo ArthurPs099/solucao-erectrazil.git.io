@@ -162,9 +162,8 @@ function formatTime(ms,showHours){
 
 function updateTimer(end,isPromo){
   const rem=end-Date.now();
-  const showHours=!isPromo;
   timerTop.textContent=formatTime(rem,isPromo?false:true);
-  timerPlans.textContent=formatTime(rem,showHours);
+  timerPlans.textContent=formatTime(rem,isPromo?false:true || !isPromo);
 }
 
 function startTimer(end,isPromo){
@@ -175,14 +174,14 @@ function startTimer(end,isPromo){
       clearInterval(interval);
       if(isPromo){
         promoText.textContent="PROMOÇÃO ENCERRADA ";
-        bigTimerCopy.textContent="Nova promoção em:";
+        bigTimerCopy.textContent="Nova oferta em:"; // mensagem cooldown
         const cooldownEnd=Date.now()+COOLDOWN;
         localStorage.setItem('timerEnd',cooldownEnd);
         localStorage.setItem('isPromo','false');
         startTimer(cooldownEnd,false);
       } else {
         promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
-        bigTimerCopy.textContent="Oferta especial disponível por:";
+        bigTimerCopy.textContent="Oferta especial disponível por:"; // mensagem promo
         const promoEnd=Date.now()+PROMO;
         localStorage.setItem('timerEnd',promoEnd);
         localStorage.setItem('isPromo','true');
@@ -206,7 +205,7 @@ if(storedEnd && storedPromo){
   if(endTime-Date.now()<=0){
     if(isPromo){
       promoText.textContent="PROMOÇÃO ENCERRADA ";
-      bigTimerCopy.textContent="Nova promoção em:";
+      bigTimerCopy.textContent="Nova oferta em:";
       endTime=Date.now()+COOLDOWN;
       isPromo=false;
     } else {
