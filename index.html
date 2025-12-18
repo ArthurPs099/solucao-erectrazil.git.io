@@ -38,7 +38,7 @@
       background:linear-gradient(135deg,#0f4c81,#1976d2);
       color:#fff;text-align:center;padding:16px 20px;
       font-weight:900;
-      transition: transform .5s ease, opacity .5s ease;
+      transition: transform .6s ease, opacity .6s ease;
     }
     .promo.pulse{animation:pulseBlue 1.6s infinite}
     #timerTop{display:block;font-size:1.2rem;margin-top:6px}
@@ -79,7 +79,7 @@
 
     /* TIMER PLANOS */
     .big-timer{
-      max-width:820px;margin:0 auto 80px;padding:36px; /* aumentei a margem inferior */
+      max-width:820px;margin:0 auto 100px;padding:36px;
       background:linear-gradient(135deg,#1e3a8a,#2563eb);
       color:#fff;text-align:center;border-radius:36px;
       box-shadow:0 30px 70px rgba(30,58,138,.45);
@@ -103,9 +103,27 @@
 
     /* PLANOS */
     .plans-title{text-align:center;font-size:2.6rem;margin-bottom:44px}
-    .menu{max-width:960px;margin:0 auto 140px; /* margem maior entre timer e planos */
-          padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
-    .plan{background:#fff;padding:32px 24px;border-radius:28px;text-align:center;text-decoration:none;color:#0f172a;box-shadow:0 26px 60px rgba(0,0,0,.12);position:relative}
+    .menu{
+      max-width:960px;
+      margin:0 auto 140px;
+      padding:0 24px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:28px
+    }
+    .plan{
+      background:#fff;
+      padding:32px 24px;
+      border-radius:28px;
+      text-align:center;
+      text-decoration:none;
+      color:#0f172a;
+      box-shadow:0 26px 60px rgba(0,0,0,.12);
+      position:relative;
+    }
+    .plan .price{font-size:1.6rem;font-weight:700;margin-top:12px}
+    .plan .old-price{font-size:1rem;color:#94a3b8;text-decoration:line-through;margin-left:8px}
+
     .highlight::after{
       content:'Maior custo-benefício';
       position:absolute;
@@ -175,9 +193,18 @@
 <!-- PLANOS -->
 <h2 id="planos" class="plans-title">Escolha seu plano</h2>
 <div class="menu">
-  <a class="plan" href="https://ev.braip.com/checkout/plawevo0/cheevqm9?pl=plawevo0&ck=cheevqm9&af=afixjmllpm" target="_blank">1 Mês</a>
-  <a class="plan highlight" href="https://ev.braip.com/ref?pl=pla08ney&ck=cheevqm9&af=afixjmllpm" target="_blank">3 Meses</a>
-  <a class="plan" href="https://ev.braip.com/ref?pl=plagyzmx&ck=cheevqm9&af=afixjmllpm" target="_blank">6 Meses</a>
+  <a class="plan" href="#" target="_blank">
+    1 Mês
+    <div class="price">R$ 197,00 <span class="old-price">R$ 219,00</span></div>
+  </a>
+  <a class="plan highlight" href="#" target="_blank">
+    3 Meses
+    <div class="price">R$ 397,00 <span class="old-price">R$ 441,00</span></div>
+  </a>
+  <a class="plan" href="#" target="_blank">
+    6 Meses
+    <div class="price">R$ 697,00 <span class="old-price">R$ 774,00</span></div>
+  </a>
 </div>
 
 <div class="trust">
@@ -192,81 +219,96 @@ const sections=document.querySelectorAll('.section');
 const obs=new IntersectionObserver(e=>e.forEach(i=>i.isIntersecting&&i.target.classList.add('visible')),{threshold:.25});
 sections.forEach(s=>obs.observe(s));
 
-/* TIMERS SINCRONIZADOS COM COOLDOWN */
-const tTop=document.getElementById('timerTop');
-const tPlan=document.getElementById('timerPlans');
-const promo=document.getElementById('promoTop');
-const bigCopy=document.getElementById('bigTimerCopy');
-const tick=document.getElementById('tickSound');
+/* TIMER SINCRONIZADO COM FADE + SLIDE E FORMATO DINÂMICO */
+const tTop = document.getElementById('timerTop');
+const tPlan = document.getElementById('timerPlans');
+const promo = document.getElementById('promoTop');
+const bigCopy = document.getElementById('bigTimerCopy');
+const tick = document.getElementById('tickSound');
+const bigTimer=document.getElementById('bigTimer');
 
-const PROMO_DURATION = 10*60*1000; // 10 minutos
-const COOLDOWN_DURATION = 12*60*60*1000; // 12 horas
+const PROMO_DURATION = 10*60*1000; // 10 min
+const COOLDOWN_DURATION = 12*60*60*1000; // 12h
 
-function formatTime(ms){
-  const totalSeconds=Math.floor(ms/1000);
-  const hours=Math.floor(totalSeconds/3600);
-  const minutes=Math.floor((totalSeconds%3600)/60);
-  const seconds=totalSeconds%60;
-  return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+function formatTime(ms, showHours){
+  const totalSeconds = Math.floor(ms/1000);
+  const h = Math.floor(totalSeconds/3600);
+  const m = Math.floor((totalSeconds % 3600)/60);
+  const s = totalSeconds % 60;
+  if(showHours) return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
 }
 
-function startTimer(duration, isPromo){
-  let endTime = Date.now()+duration;
-  const timerInterval=setInterval(()=>{
-    const remaining=endTime-Date.now();
-    if(remaining<=0){
+function startTimer(endTime, isPromo){
+  const timerInterval = setInterval(()=>{
+    const remaining = endTime-Date.now();
+    if(remaining <=0){
       clearInterval(timerInterval);
       if(isPromo){
         promo.innerHTML='PROMOÇÃO ENCERRADA';
         bigCopy.innerText='Nova promoção em breve';
-        startTimer(COOLDOWN_DURATION,false);
-      } else {
+        const cooldownEnd = Date.now()+COOLDOWN_DURATION;
+        localStorage.setItem('timerEnd',cooldownEnd);
+        localStorage.setItem('isPromo','false');
+        startTimer(cooldownEnd,false);
+      } else{
         promo.innerHTML='NOVA PROMOÇÃO · 10% DE DESCONTO';
         bigCopy.innerText='Oferta especial disponível por';
-        startTimer(PROMO_DURATION,true);
+        const promoEnd = Date.now()+PROMO_DURATION;
+        localStorage.setItem('timerEnd',promoEnd);
+        localStorage.setItem('isPromo','true');
+        startTimer(promoEnd,true);
       }
       return;
     }
-    const formatted=formatTime(remaining);
-    tTop.textContent=formatted;
-    tPlan.textContent=formatted;
+    tTop.textContent = formatTime(remaining,isPromo===false);
+    tPlan.textContent = formatTime(remaining,isPromo===false);
     tick.volume=0.12;
     tick.currentTime=0;
     tick.play().catch(()=>{});
   },1000);
 }
 
-// Persistência no localStorage
-let promoEnd=localStorage.getItem('promoEnd');
-let isPromo=localStorage.getItem('isPromo');
+// Persistência
+let storedEnd = localStorage.getItem('timerEnd');
+let storedPromo = localStorage.getItem('isPromo');
 
-if(promoEnd && isPromo){
-  promoEnd=parseInt(promoEnd);
-  const remaining=promoEnd-Date.now();
+if(storedEnd && storedPromo){
+  const endTime = parseInt(storedEnd);
+  const isPromo = storedPromo==='true';
+  const remaining = endTime-Date.now();
   if(remaining>0){
-    startTimer(remaining,isPromo==='true');
-  } else {
-    startTimer(isPromo==='true'?COOLDOWN_DURATION:PROMO_DURATION,isPromo!=='true');
+    startTimer(endTime,isPromo);
+  } else{
+    if(isPromo){
+      promo.innerHTML='PROMOÇÃO ENCERRADA';
+      bigCopy.innerText='Nova promoção em breve';
+      const cooldownEnd = Date.now()+COOLDOWN_DURATION;
+      localStorage.setItem('timerEnd',cooldownEnd);
+      localStorage.setItem('isPromo','false');
+      startTimer(cooldownEnd,false);
+    } else{
+      promo.innerHTML='NOVA PROMOÇÃO · 10% DE DESCONTO';
+      bigCopy.innerText='Oferta especial disponível por';
+      const promoEnd = Date.now()+PROMO_DURATION;
+      localStorage.setItem('timerEnd',promoEnd);
+      localStorage.setItem('isPromo','true');
+      startTimer(promoEnd,true);
+    }
   }
-} else {
-  startTimer(PROMO_DURATION,true);
+} else{
+  const promoEnd = Date.now()+PROMO_DURATION;
+  localStorage.setItem('timerEnd',promoEnd);
+  localStorage.setItem('isPromo','true');
+  startTimer(promoEnd,true);
 }
 
-// Atualiza localStorage
-setInterval(()=>{
-  const currentIsPromo=promo.innerHTML.includes('DESCONTO');
-  const currentEnd=Date.now()+((currentIsPromo)?PROMO_DURATION:COOLDOWN_DURATION);
-  localStorage.setItem('promoEnd',currentEnd);
-  localStorage.setItem('isPromo',currentIsPromo);
-},1000);
-
-/* FAZER O PRIMEIRO TIMER DESAPARECER QUANDO SCROLL CHEGAR NO SEGUNDO TIMER */
-const bigTimer=document.getElementById('bigTimer');
-const promoObserver=new IntersectionObserver(entries=>{
+// FADE + SLIDE PRIMEIRO TIMER AO SCROLL
+const promoObserver = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
       promo.classList.add('hidden');
-    } else {
+    } else{
       promo.classList.remove('hidden');
     }
   });
