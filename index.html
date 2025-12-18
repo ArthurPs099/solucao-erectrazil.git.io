@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 <style>
-/* === CSS === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:#f6f9ff;color:#0f172a;overflow-x:hidden}
 body::before,body::after{content:'';position:fixed;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.18),transparent 70%);z-index:-1}
@@ -20,7 +19,8 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 .promo{position:sticky;top:0;z-index:999;background:linear-gradient(135deg,#0f4c81,#1976d2);color:#fff;text-align:center;padding:16px 20px;font-weight:900;transition: transform .6s ease, opacity .6s ease}
 .promo.pulse{animation:pulseBlue 1.6s infinite}
 .promo.hidden{transform: translateY(-100%);opacity: 0}
-#timerTop{display:block;font-size:1.2rem}
+#promoText{display:inline-block;margin-right:8px}
+#timerTop{display:inline-block;font-size:1.2rem}
 @keyframes pulseBlue{0%{transform:scale(1);box-shadow:0 0 0 rgba(25,118,210,.6)}50%{transform:scale(1.05);box-shadow:0 0 22px rgba(25,118,210,.9)}100%{transform:scale(1);box-shadow:0 0 0 rgba(25,118,210,.6)}}
 
 /* SECTIONS */
@@ -53,7 +53,7 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 .trust{text-align:center;color:#334155;padding-bottom:40px}
 .trust span{margin:10px 14px;display:inline-block}
 
-/* RESPONSIVE MOBILE */
+/* MOBILE */
 @media(max-width:768px){
   .section{padding:80px 16px;gap:40px;margin-bottom:120px}
   .text h1{font-size:2.2rem}
@@ -82,7 +82,10 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 </head>
 <body>
 
-<div class="promo pulse" id="promoTop"><span id="promoText">PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO </span><span id="timerTop">10:00</span></div>
+<div class="promo pulse" id="promo">
+  <span id="promoText">PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO </span>
+  <span id="timerTop">10:00</span>
+</div>
 
 <section class="section">
   <div class="text">
@@ -91,11 +94,11 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
     <p>Uso diário, discreto e focado em equilíbrio a longo prazo.</p>
     <a href="#planos" class="cta">Ver opções</a>
   </div>
-  <div class="media"><img src="erectazil-produto-1.png"></div>
+  <div class="media"><img src="erectazil-produto-1.png" alt="Produto"></div>
 </section>
 
 <section class="section alt">
-  <div class="media"><img src="erectazil-uso-diario.png"></div>
+  <div class="media"><img src="erectazil-uso-diario.png" alt="Uso diário"></div>
   <div class="text">
     <h2>Um hábito simples. Um impacto real.</h2>
     <p>Nada de pressão. Com o tempo, o corpo responde e a cabeça acompanha.</p>
@@ -116,7 +119,7 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
     </div>
     <div class="reviews" id="reviews"></div>
   </div>
-  <div class="media"><img src="erectazil-estilo-de-vida.png"></div>
+  <div class="media"><img src="erectazil-estilo-de-vida.png" alt="Estilo de vida"></div>
 </section>
 
 <div class="big-timer" id="bigTimer">
@@ -143,97 +146,104 @@ const timerPlans=document.getElementById('timerPlans');
 const promoText=document.getElementById('promoText');
 const bigTimerCopy=document.getElementById('bigTimerCopy');
 const bigTimer=document.getElementById('bigTimer');
+const promo=document.getElementById('promo');
 
-const PROMO=10*60*1000; // 10 minutos
-const COOLDOWN=12*60*60*1000; // 12 horas
+const PROMO=10*60*1000;
+const COOLDOWN=12*60*60*1000;
 
 function formatTime(ms,showHours){
-    const totalSec=Math.floor(ms/1000);
-    const h=Math.floor(totalSec/3600);
-    const m=Math.floor(totalSec%3600/60);
-    const s=totalSec%60;
-    if(showHours) return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-    else return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-}
-
-function startTimer(end,isPromo){
-    // Atualiza imediatamente
-    updateTimer(end,isPromo);
-    const interval=setInterval(()=>{
-        const rem=end-Date.now();
-        if(rem<=0){
-            clearInterval(interval);
-            if(isPromo){
-                promoText.textContent="PROMOÇÃO ENCERRADA ";
-                bigTimerCopy.textContent="Nova promoção em:";
-                const cooldownEnd=Date.now()+COOLDOWN;
-                localStorage.setItem('timerEnd',cooldownEnd);
-                localStorage.setItem('isPromo','false');
-                startTimer(cooldownEnd,false);
-            } else {
-                promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
-                bigTimerCopy.textContent="Oferta especial disponível por:";
-                const promoEnd=Date.now()+PROMO;
-                localStorage.setItem('timerEnd',promoEnd);
-                localStorage.setItem('isPromo','true');
-                startTimer(promoEnd,true);
-            }
-            return;
-        }
-        updateTimer(end,isPromo);
-        // Tick
-        tick.volume=0.12;
-        tick.currentTime=0;
-        tick.play().catch(()=>{});
-    },1000);
+  const totalSec=Math.floor(ms/1000);
+  const h=Math.floor(totalSec/3600);
+  const m=Math.floor(totalSec%3600/60);
+  const s=totalSec%60;
+  return showHours?`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`:`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
 }
 
 function updateTimer(end,isPromo){
-    const rem=end-Date.now();
-    const showHours=!isPromo;
-    timerTop.textContent=formatTime(rem,showHours);
-    timerPlans.textContent=formatTime(rem,showHours);
+  const rem=end-Date.now();
+  const showHours=!isPromo;
+  timerTop.textContent=formatTime(rem,showHours);
+  timerPlans.textContent=formatTime(rem,showHours);
 }
 
-// Inicialização com persistência
+function startTimer(end,isPromo){
+  updateTimer(end,isPromo);
+  const interval=setInterval(()=>{
+    const rem=end-Date.now();
+    if(rem<=0){
+      clearInterval(interval);
+      if(isPromo){
+        promoText.textContent="PROMOÇÃO ENCERRADA ";
+        bigTimerCopy.textContent="Nova promoção em:";
+        const cooldownEnd=Date.now()+COOLDOWN;
+        localStorage.setItem('timerEnd',cooldownEnd);
+        localStorage.setItem('isPromo','false');
+        startTimer(cooldownEnd,false);
+      }else{
+        promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
+        bigTimerCopy.textContent="Oferta especial disponível por:";
+        const promoEnd=Date.now()+PROMO;
+        localStorage.setItem('timerEnd',promoEnd);
+        localStorage.setItem('isPromo','true');
+        startTimer(promoEnd,true);
+      }
+      return;
+    }
+    updateTimer(end,isPromo);
+    tick.volume=0.12; tick.currentTime=0; tick.play().catch(()=>{});
+  },1000);
+}
+
+// Inicialização persistente
 let storedEnd=localStorage.getItem('timerEnd');
 let storedPromo=localStorage.getItem('isPromo');
-
 let endTime,isPromo;
+
 if(storedEnd && storedPromo){
-    endTime=parseInt(storedEnd);
-    isPromo=storedPromo==='true';
-    if(endTime-Date.now()<=0){
-        if(isPromo){
-            // Promo expirou, iniciar cooldown
-            promoText.textContent="PROMOÇÃO ENCERRADA ";
-            bigTimerCopy.textContent="Nova promoção em:";
-            endTime=Date.now()+COOLDOWN;
-            isPromo=false;
-        } else {
-            // Cooldown expirou, iniciar nova promo
-            promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
-            bigTimerCopy.textContent="Oferta especial disponível por:";
-            endTime=Date.now()+PROMO;
-            isPromo=true;
-        }
+  endTime=parseInt(storedEnd);
+  isPromo=storedPromo==='true';
+  if(endTime-Date.now()<=0){
+    if(isPromo){
+      promoText.textContent="PROMOÇÃO ENCERRADA ";
+      bigTimerCopy.textContent="Nova promoção em:";
+      endTime=Date.now()+COOLDOWN;
+      isPromo=false;
+    } else {
+      promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
+      bigTimerCopy.textContent="Oferta especial disponível por:";
+      endTime=Date.now()+PROMO;
+      isPromo=true;
     }
+  }
 } else {
-    endTime=Date.now()+PROMO;
-    isPromo=true;
+  endTime=Date.now()+PROMO;
+  isPromo=true;
 }
 localStorage.setItem('timerEnd',endTime);
 localStorage.setItem('isPromo',isPromo);
 startTimer(endTime,isPromo);
 
-// Fade topo quando scroll chega no big timer
-new IntersectionObserver(entries=>entries.forEach(en=>promoText.parentElement.classList.toggle('hidden',en.isIntersecting)),{threshold:0}).observe(bigTimer);
+// Fade topo ao scroll
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    promo.classList.toggle('hidden', e.isIntersecting);
+  });
+},{threshold:0}).observe(bigTimer);
+
+// Seções animadas
+document.querySelectorAll('.section').forEach(sec=>{
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  },{threshold:0.25}).observe(sec);
+});
 
 // Avaliações
 const reviews=['Rosa Maria F*****<br>★★★★★<br>Meu marido voltou a sorrir. Aqui em casa ninguém reclama mais 😅 Recomendo!','José Antônio G******<br>★★★★☆<br>Demorou um pouco, mas quando engrenou… foi só alegria.','Lucas V*****<br>★★★★★<br>Simples, discreto e funcionou. Adeus preocupação desnecessária.','Marina S*****<br>★★★★★<br>Confiança faz diferença. Mudou o clima aqui em casa.','Carlos E*****<br>★★★★☆<br>Não faz milagre, mas ajuda muito. Estou satisfeito.'];
 const rEl=document.getElementById('reviews');
 reviews.sort(()=>0.5-Math.random()).slice(0,4).forEach(r=>{
-    const d=document.createElement('div');d.className='review';d.innerHTML=r;rEl.appendChild(d);
+  const d=document.createElement('div'); d.className='review'; d.innerHTML=r; rEl.appendChild(d);
 });
 </script>
 </body>
