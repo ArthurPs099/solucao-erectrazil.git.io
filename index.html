@@ -359,48 +359,65 @@
 
   <!-- ANIMAÇÃO NO SCROLL -->
   <script>
-  <script>
-  // TIMER PERSISTENTE (localStorage) PARA TOPO E SEÇÃO DE PLANOS
-  const DURATION = 10 * 60; // 10 minutos em segundos
-  const STORAGE_KEY = 'erectazil_promo_timer';
+  // =============================
+  // TIMER PERSISTENTE + SCROLL REVEAL (CORRIGIDO)
+  // =============================
 
-  const topEl = document.getElementById('countdown-top');
-  const plansEl = document.getElementById('countdown-plans');
+  document.addEventListener('DOMContentLoaded', () => {
 
-  function getRemainingTime() {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    /* ===== SCROLL ANIMATION ===== */
+    const sections = document.querySelectorAll('.section');
 
-    if (!stored) {
-      const endTime = Date.now() + DURATION * 1000;
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    sections.forEach(section => observer.observe(section));
+
+    /* ===== TIMER PERSISTENTE ===== */
+    const DURATION = 10 * 60; // 10 minutos
+    const STORAGE_KEY = 'erectazil_promo_timer_end';
+
+    const topEl = document.getElementById('countdown-top');
+    const plansEl = document.getElementById('countdown-plans');
+
+    let endTime = localStorage.getItem(STORAGE_KEY);
+
+    if (!endTime) {
+      endTime = Date.now() + DURATION * 1000;
       localStorage.setItem(STORAGE_KEY, endTime);
-      return DURATION;
     }
 
-    const remaining = Math.floor((stored - Date.now()) / 1000);
-    return remaining > 0 ? remaining : 0;
-  }
+    function updateCountdown() {
+      const now = Date.now();
+      const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
 
-  function updateCountdown() {
-    const time = getRemainingTime();
+      const minutes = Math.floor(remaining / 60);
+      const seconds = remaining % 60;
 
-    if (time <= 0) {
-      if (topEl) topEl.textContent = 'ENCERRADO';
-      if (plansEl) plansEl.textContent = 'ENCERRADO';
-      clearInterval(countdownInterval);
-      return;
+      const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (topEl) topEl.textContent = formatted;
+      if (plansEl) plansEl.textContent = formatted;
+
+      if (remaining <= 0) {
+        if (topEl) topEl.textContent = 'ENCERRADO';
+        if (plansEl) plansEl.textContent = 'ENCERRADO';
+        clearInterval(timerInterval);
+      }
     }
 
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
 
-    const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-    if (topEl) topEl.textContent = formatted;
-    if (plansEl) plansEl.textContent = formatted;
-  }
-
-  updateCountdown();
-  const countdownInterval = setInterval(updateCountdown, 1000);
+  });
 </script>
 
 </body>
