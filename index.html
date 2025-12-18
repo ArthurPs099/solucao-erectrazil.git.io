@@ -24,25 +24,25 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 @keyframes pulseBlue{0%{transform:scale(1);box-shadow:0 0 0 rgba(25,118,210,.6)}50%{transform:scale(1.05);box-shadow:0 0 22px rgba(25,118,210,.9)}100%{transform:scale(1);box-shadow:0 0 0 rgba(25,118,210,.6)}}
 
 /* SECTIONS */
-.section{max-width:1100px;margin:0 auto 180px;padding:140px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:56px;align-items:center;opacity:0;transform:translateY(70px);transition:.9s ease}
+.section{max-width:1100px;margin:0 auto 220px;padding:160px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:64px;align-items:center;opacity:0;transform:translateY(70px);transition:.9s ease}
 .section.visible{opacity:1;transform:none}
 .section.alt{background:linear-gradient(180deg,#eef4ff,#f6f9ff);border-radius:48px}
-.text h1{font-size:3.2rem;margin-bottom:24px}
-.text h2{font-size:2.4rem;margin-bottom:20px}
+.text h1{font-size:3.2rem;margin-bottom:28px}
+.text h2{font-size:2.4rem;margin-bottom:24px}
 .text p{font-size:1.12rem;line-height:1.85;margin-bottom:18px;color:#334155}
 .media img{width:100%;border-radius:28px;box-shadow:0 26px 60px rgba(37,99,235,.25)}
 .cta{display:inline-block;margin-top:26px;padding:16px 36px;background:linear-gradient(90deg,#2563eb,#1e40af);color:#fff;border-radius:999px;text-decoration:none;font-weight:700;transition:transform .3s ease}
 .cta:hover{transform:scale(1.05)}
 
 /* BIG TIMER */
-.big-timer{max-width:820px;margin:0 auto 220px;padding:36px;background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;text-align:center;border-radius:36px;box-shadow:0 30px 70px rgba(30,58,138,.45);animation:pulseBlue 1.6s infinite;position:relative}
+.big-timer{max-width:820px;margin:0 auto 180px;padding:36px;background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;text-align:center;border-radius:36px;box-shadow:0 30px 70px rgba(30,58,138,.45);animation:pulseBlue 1.6s infinite;position:relative}
 .big-timer h3{font-size:1.8rem;margin-bottom:12px}
 .big-timer span{font-size:2.6rem;font-weight:900}
 .big-timer .disclaimer{font-size:1rem;color:#dbeafe;margin-top:12px}
 
 /* PLANOS */
-.plans-title{text-align:center;font-size:2.6rem;margin-bottom:44px}
-.menu{max-width:960px;margin:0 auto 140px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+.plans-title{text-align:center;font-size:2.6rem;margin-bottom:50px}
+.menu{max-width:960px;margin:0 auto 180px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
 .plan{background:#fff;padding:32px 24px;border-radius:28px;text-align:center;text-decoration:none;color:#0f172a;box-shadow:0 26px 60px rgba(0,0,0,.12);position:relative;transition:transform .3s ease}
 .plan:hover{transform:scale(1.03)}
 .plan .price{font-size:1.6rem;font-weight:700;margin-top:12px}
@@ -52,15 +52,16 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 .installment-msg{text-align:center;color:#1e40af;font-weight:700;font-size:1.1rem;margin-top:20px}
 .trust{text-align:center;color:#334155;padding-bottom:40px}
 .trust span{margin:10px 14px;display:inline-block}
+.checkout-note{text-align:center;color:#1e40af;font-weight:700;font-size:1.2rem;margin-top:12px}
 
 /* MOBILE */
 @media(max-width:768px){
-  .section{padding:80px 16px;gap:40px;margin-bottom:120px}
+  .section{padding:80px 16px;gap:40px;margin-bottom:140px}
   .text h1{font-size:2.2rem}
   .text h2{font-size:1.8rem}
   .text p{font-size:1rem;line-height:1.6}
   .cta{padding:12px 28px;font-size:0.95rem}
-  .big-timer{padding:24px;margin-bottom:120px}
+  .big-timer{padding:24px;margin-bottom:140px}
   .big-timer h3{font-size:1.4rem}
   .big-timer span{font-size:2rem}
   .big-timer .disclaimer{font-size:0.9rem}
@@ -70,6 +71,7 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
   .plan .price{font-size:1.4rem}
   .plan .old-price{font-size:0.9rem}
   .installment-msg{font-size:1rem;margin-top:15px}
+  .checkout-note{font-size:1rem;margin-top:10px}
 }
 
 /* AVALIAÇÕES */
@@ -134,8 +136,8 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
   <a class="plan highlight" href="https://ev.braip.com/checkout/pla08ney/cheevqm9?pl=pla08ney&ck=cheevqm9&af=afixjmllpm&currency=BRL" target="_blank">3 Meses<div class="price">R$ 397,00 <span class="old-price">R$ 441,00</span></div></a>
   <a class="plan" href="https://ev.braip.com/ref?pl=plagyzmx&ck=cheevqm9&af=afixjmllpm" target="_blank">6 Meses<div class="price">R$ 697,00 <span class="old-price">R$ 774,00</span></div></a>
 </div>
-<div class="installment-msg">💳 Parcelamento disponível em até 12x sem juros!</div>
-<div class="trust"><span>✔ Compra segura</span><span>✔ Envio discreto</span><span>✔ Pagamento protegido</span></div>
+<div class="checkout-note">💳 Parcela em até 12x!</div>
+<div class="installment-msg">✔ Compra segura · ✔ Envio discreto · ✔ Pagamento protegido</div>
 
 <audio id="tickSound" preload="auto"><source src="tick.mp3" type="audio/mpeg"></audio>
 
@@ -145,11 +147,10 @@ const timerTop=document.getElementById('timerTop');
 const timerPlans=document.getElementById('timerPlans');
 const promoText=document.getElementById('promoText');
 const bigTimerCopy=document.getElementById('bigTimerCopy');
-const bigTimer=document.getElementById('bigTimer');
 const promo=document.getElementById('promo');
 
-const PROMO=10*60*1000;
-const COOLDOWN=12*60*60*1000;
+const PROMO=10*60*1000; // 10 minutos
+const COOLDOWN=12*60*60*1000; // 12 horas
 
 function formatTime(ms,showHours){
   const totalSec=Math.floor(ms/1000);
@@ -162,7 +163,7 @@ function formatTime(ms,showHours){
 function updateTimer(end,isPromo){
   const rem=end-Date.now();
   const showHours=!isPromo;
-  timerTop.textContent=formatTime(rem,showHours);
+  timerTop.textContent=formatTime(rem,isPromo?false:true);
   timerPlans.textContent=formatTime(rem,showHours);
 }
 
@@ -179,7 +180,7 @@ function startTimer(end,isPromo){
         localStorage.setItem('timerEnd',cooldownEnd);
         localStorage.setItem('isPromo','false');
         startTimer(cooldownEnd,false);
-      }else{
+      } else {
         promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
         bigTimerCopy.textContent="Oferta especial disponível por:";
         const promoEnd=Date.now()+PROMO;
@@ -228,7 +229,7 @@ new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     promo.classList.toggle('hidden', e.isIntersecting);
   });
-},{threshold:0}).observe(bigTimer);
+},{threshold:0}).observe(document.getElementById('bigTimer'));
 
 // Seções animadas
 document.querySelectorAll('.section').forEach(sec=>{
