@@ -136,43 +136,56 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 <audio id="tickSound" preload="auto"><source src="tick.mp3" type="audio/mpeg"></audio>
 
 <script>
-// SCROLL
-document.querySelectorAll('.section').forEach(s=>new IntersectionObserver(entries=>entries.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.25}).observe(s));
-
-// TIMER
 const tTop=document.getElementById('timerTop'), tPlan=document.getElementById('timerPlans'), promo=document.getElementById('promoTop'), bigCopy=document.getElementById('bigTimerCopy'), tick=document.getElementById('tickSound'), bigTimer=document.getElementById('bigTimer');
 const PROMO=10*60*1000, COOLDOWN=12*60*60*1000;
 
-const formatTime=(ms,hours)=>{const t=Math.floor(ms/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;return hours?`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`:`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`};
+const formatTime=(ms,h)=>{const t=Math.floor(ms/1000),hh=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;return h?`${hh.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`:`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`};
 
-const startTimer=(end,isPromo)=>{
+function startTimer(end,isPromo){
+  if(isPromo) promo.innerHTML='PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO <span id="timerTop"></span>'; else promo.innerHTML='PROMOÇÃO ENCERRADA';
   const interval=setInterval(()=>{
     const rem=end-Date.now();
-    if(rem<=0){clearInterval(interval);
-      if(isPromo){promo.innerHTML='PROMOÇÃO ENCERRADA';bigCopy.innerText='Nova promoção em:';const c=Date.now()+COOLDOWN;localStorage.setItem('timerEnd',c);localStorage.setItem('isPromo','false');startTimer(c,false)}
-      else{promo.innerHTML='PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO';bigCopy.innerText='Oferta especial disponível por';const p=Date.now()+PROMO;localStorage.setItem('timerEnd',p);localStorage.setItem('isPromo','true');startTimer(p,true)}
+    if(rem<=0){
+      clearInterval(interval);
+      if(isPromo){
+        promo.innerHTML='PROMOÇÃO ENCERRADA';
+        bigCopy.innerText='Nova promoção em:';
+        const cooldownEnd=Date.now()+COOLDOWN;
+        localStorage.setItem('timerEnd',cooldownEnd);
+        localStorage.setItem('isPromo','false');
+        startTimer(cooldownEnd,false);
+      }else{
+        promo.innerHTML='PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO <span id="timerTop"></span>';
+        bigCopy.innerText='Oferta especial disponível por';
+        const promoEnd=Date.now()+PROMO;
+        localStorage.setItem('timerEnd',promoEnd);
+        localStorage.setItem('isPromo','true');
+        startTimer(promoEnd,true);
+      }
       return;
     }
     const showHours=!isPromo;
-    tTop.textContent=formatTime(rem,showHours); tPlan.textContent=formatTime(rem,showHours);
-    tick.volume=.12; tick.currentTime=0; tick.play().catch(()=>{});
+    tTop.textContent=formatTime(rem,showHours);
+    tPlan.textContent=formatTime(rem,showHours);
+    tick.volume=0.12;
+    tick.currentTime=0;
+    tick.play().catch(()=>{});
   },1000);
-};
+}
 
 // Persistência
-let e=localStorage.getItem('timerEnd'), i=localStorage.getItem('isPromo');
-if(e && i){const end=parseInt(e),isP=i==='true';end-Date.now()>0?startTimer(end,isP):(isP?(promo.innerHTML='PROMOÇÃO ENCERRADA',bigCopy.innerText='Nova promoção em:',startTimer(Date.now()+COOLDOWN,false)):(promo.innerHTML='PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO',bigCopy.innerText='Oferta especial disponível por',startTimer(Date.now()+PROMO,true)));}
-else{const p=Date.now()+PROMO;localStorage.setItem('timerEnd',p);localStorage.setItem('isPromo','true');startTimer(p,true);}
+let storedEnd=localStorage.getItem('timerEnd'), storedPromo=localStorage.getItem('isPromo');
+if(storedEnd && storedPromo){
+  const end=parseInt(storedEnd), isP=storedPromo==='true';
+  if(end-Date.now()>0) startTimer(end,isP);
+  else startTimer(Date.now(),isP);
+}else{startTimer(Date.now()+PROMO,true);}
 
-// FADE PRIMEIRO TIMER
+// Fade primeiro timer
 new IntersectionObserver(e=>e.forEach(en=>promo.classList.toggle('hidden',en.isIntersecting)),{threshold:0}).observe(bigTimer);
 
-// AVALIAÇÕES
-const reviews=['Rosa Maria F*****<br>★★★★★<br>Meu marido voltou a sorrir. Aqui em casa ninguém reclama mais 😅 Recomendo!',
-'José Antônio G******<br>★★★★☆<br>Demorou um pouco, mas quando engrenou… foi só alegria.',
-'Lucas V*****<br>★★★★★<br>Simples, discreto e funcionou. Adeus preocupação desnecessária.',
-'Marina S*****<br>★★★★★<br>Confiança faz diferença. Mudou o clima aqui em casa.',
-'Carlos E*****<br>★★★★☆<br>Não faz milagre, mas ajuda muito. Estou satisfeito.'];
+// Avaliações
+const reviews=['Rosa Maria F*****<br>★★★★★<br>Meu marido voltou a sorrir. Aqui em casa ninguém reclama mais 😅 Recomendo!','José Antônio G******<br>★★★★☆<br>Demorou um pouco, mas quando engrenou… foi só alegria.','Lucas V*****<br>★★★★★<br>Simples, discreto e funcionou. Adeus preocupação desnecessária.','Marina S*****<br>★★★★★<br>Confiança faz diferença. Mudou o clima aqui em casa.','Carlos E*****<br>★★★★☆<br>Não faz milagre, mas ajuda muito. Estou satisfeito.'];
 const rEl=document.getElementById('reviews');reviews.sort(()=>0.5-Math.random()).slice(0,4).forEach(r=>{const d=document.createElement('div');d.className='review';d.innerHTML=r;rEl.appendChild(d)});
 </script>
 </body>
