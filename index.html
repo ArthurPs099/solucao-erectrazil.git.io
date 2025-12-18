@@ -56,7 +56,7 @@
 
     /* SECTIONS */
     .section{
-      max-width:1100px;margin:0 auto 180px;padding:140px 24px; /* mais espaçamento */
+      max-width:1100px;margin:0 auto 180px;padding:140px 24px;
       display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
       gap:56px;align-items:center;
       opacity:0;transform:translateY(70px);
@@ -79,7 +79,7 @@
 
     /* TIMER PLANOS */
     .big-timer{
-      max-width:820px;margin:0 auto 40px;padding:36px;
+      max-width:820px;margin:0 auto 80px;padding:36px; /* aumentei a margem inferior */
       background:linear-gradient(135deg,#1e3a8a,#2563eb);
       color:#fff;text-align:center;border-radius:36px;
       box-shadow:0 30px 70px rgba(30,58,138,.45);
@@ -103,7 +103,8 @@
 
     /* PLANOS */
     .plans-title{text-align:center;font-size:2.6rem;margin-bottom:44px}
-    .menu{max-width:960px;margin:0 auto 120px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+    .menu{max-width:960px;margin:0 auto 140px; /* margem maior entre timer e planos */
+          padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
     .plan{background:#fff;padding:32px 24px;border-radius:28px;text-align:center;text-decoration:none;color:#0f172a;box-shadow:0 26px 60px rgba(0,0,0,.12);position:relative}
     .highlight::after{
       content:'Maior custo-benefício';
