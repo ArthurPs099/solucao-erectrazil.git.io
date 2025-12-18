@@ -37,10 +37,16 @@
       position:sticky;top:0;z-index:999;
       background:linear-gradient(135deg,#0f4c81,#1976d2);
       color:#fff;text-align:center;padding:16px 20px;
-      font-weight:900
+      font-weight:900;
+      transition: transform .5s ease, opacity .5s ease;
     }
     .promo.pulse{animation:pulseBlue 1.6s infinite}
     #timerTop{display:block;font-size:1.2rem;margin-top:6px}
+
+    .promo.hidden{
+      transform: translateY(-100%);
+      opacity: 0;
+    }
 
     @keyframes pulseBlue{
       0%{transform:scale(1);box-shadow:0 0 0 rgba(25,118,210,.6)}
@@ -73,14 +79,20 @@
 
     /* TIMER PLANOS */
     .big-timer{
-      max-width:820px;margin:0 auto 60px;padding:36px;
+      max-width:820px;margin:0 auto 10px;padding:36px;
       background:linear-gradient(135deg,#1e3a8a,#2563eb);
       color:#fff;text-align:center;border-radius:36px;
       box-shadow:0 30px 70px rgba(30,58,138,.45);
-      animation:pulseBlue 1.6s infinite
+      animation:pulseBlue 1.6s infinite;
+      position:relative;
     }
     .big-timer h3{font-size:1.8rem;margin-bottom:12px}
     .big-timer span{font-size:2.6rem;font-weight:900}
+    .big-timer .disclaimer{
+      font-size:1rem;
+      color:#dbeafe;
+      margin-top:12px;
+    }
 
     /* AVALIAÇÕES */
     .rating-box{display:flex;align-items:center;gap:18px;margin:16px 0}
@@ -146,9 +158,10 @@
 </section>
 
 <!-- TIMER PLANOS -->
-<div class="big-timer">
+<div class="big-timer" id="bigTimer">
   <h3 id="bigTimerCopy">Oferta especial disponível por</h3>
   <span id="timerPlans">10:00</span>
+  <div class="disclaimer">Desconto aplicado diretamente no checkout</div>
 </div>
 
 <!-- PLANOS -->
@@ -166,7 +179,7 @@
 <audio id="tickSound" preload="auto"><source src="tick.mp3" type="audio/mpeg"></audio>
 
 <script>
-/* SCROLL */
+/* SCROLL ANIMATION */
 const sections=document.querySelectorAll('.section');
 const obs=new IntersectionObserver(e=>e.forEach(i=>i.isIntersecting&&i.target.classList.add('visible')),{threshold:.25});
 sections.forEach(s=>obs.observe(s));
@@ -231,6 +244,19 @@ setInterval(()=>{
   localStorage.setItem('promoEnd',currentEnd);
   localStorage.setItem('isPromo',currentIsPromo);
 },1000);
+
+/* FAZER O PRIMEIRO TIMER DESAPARECER QUANDO SCROLL CHEGAR NO SEGUNDO TIMER */
+const bigTimer=document.getElementById('bigTimer');
+const promoObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      promo.classList.add('hidden');
+    } else {
+      promo.classList.remove('hidden');
+    }
+  });
+},{threshold:0});
+promoObserver.observe(bigTimer);
 
 /* AVALIAÇÕES */
 const reviewsData=[
