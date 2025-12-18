@@ -41,7 +41,8 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 
 .media img{width:100%;border-radius:28px;box-shadow:0 26px 60px rgba(37,99,235,.25)}
 
-.cta{display:inline-block;margin-top:26px;padding:16px 36px;background:linear-gradient(90deg,#2563eb,#1e40af);color:#fff;border-radius:999px;text-decoration:none;font-weight:700}
+.cta{display:inline-block;margin-top:26px;padding:16px 36px;background:linear-gradient(90deg,#2563eb,#1e40af);color:#fff;border-radius:999px;text-decoration:none;font-weight:700;transition:transform .3s ease}
+.cta:hover{transform:scale(1.05)}
 
 /* TIMER PLANOS */
 .big-timer{max-width:820px;margin:0 auto 140px;padding:36px;background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;text-align:center;border-radius:36px;box-shadow:0 30px 70px rgba(30,58,138,.45);animation:pulseBlue 1.6s infinite;position:relative}
@@ -59,7 +60,8 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 /* PLANOS */
 .plans-title{text-align:center;font-size:2.6rem;margin-bottom:44px}
 .menu{max-width:960px;margin:0 auto 140px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
-.plan{background:#fff;padding:32px 24px;border-radius:28px;text-align:center;text-decoration:none;color:#0f172a;box-shadow:0 26px 60px rgba(0,0,0,.12);position:relative}
+.plan{background:#fff;padding:32px 24px;border-radius:28px;text-align:center;text-decoration:none;color:#0f172a;box-shadow:0 26px 60px rgba(0,0,0,.12);position:relative;transition:transform .3s ease}
+.plan:hover{transform:scale(1.03)}
 .plan .price{font-size:1.6rem;font-weight:700;margin-top:12px}
 .plan .old-price{font-size:1rem;color:#94a3b8;text-decoration:line-through;margin-left:8px}
 .highlight::after{content:'Maior custo-benefício';position:absolute;top:-12px;right:-12px;background:#2563eb;color:#fff;font-size:0.9rem;padding:6px 10px;border-radius:12px;font-weight:600}
@@ -67,6 +69,26 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 .installment-msg{text-align:center;color:#1e40af;font-weight:700;font-size:1.1rem;margin-top:20px}
 .trust{text-align:center;color:#334155;padding-bottom:40px}
 .trust span{margin:10px 14px;display:inline-block}
+
+/* RESPONSIVE MOBILE */
+@media(max-width:768px){
+  .section{padding:80px 16px;gap:40px;margin-bottom:120px}
+  .text h1{font-size:2.2rem}
+  .text h2{font-size:1.8rem}
+  .text p{font-size:1rem;line-height:1.6}
+  .cta{padding:12px 28px;font-size:0.95rem}
+  .big-timer{padding:24px;margin-bottom:100px}
+  .big-timer h3{font-size:1.4rem}
+  .big-timer span{font-size:2rem}
+  .big-timer .disclaimer{font-size:0.9rem}
+  .plans-title{font-size:2rem;margin-bottom:30px}
+  .menu{gap:20px;padding:0 12px}
+  .plan{padding:24px 16px}
+  .plan .price{font-size:1.4rem}
+  .plan .old-price{font-size:0.9rem}
+  .installment-msg{font-size:1rem;margin-top:15px}
+  .rating-score{font-size:3rem}
+}
 </style>
 </head>
 <body>
@@ -139,7 +161,7 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
   </a>
 </div>
 
-<div class="installment-msg">💳 Parcelamento disponível em até 12x!</div>
+<div class="installment-msg">💳 Parcelamento disponível em até 12x sem juros!</div>
 
 <div class="trust">
   <span>✔ Compra segura</span><span>✔ Envio discreto</span><span>✔ Pagamento protegido</span>
