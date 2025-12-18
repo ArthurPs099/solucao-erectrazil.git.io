@@ -35,7 +35,7 @@ h1,h2{font-family:'Montserrat',sans-serif;color:#0b3a8f}
 .cta:hover{transform:scale(1.05)}
 
 /* BIG TIMER */
-.big-timer{max-width:820px;margin:0 auto 180px;padding:36px;background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;text-align:center;border-radius:36px;box-shadow:0 30px 70px rgba(30,58,138,.45);animation:pulseBlue 1.6s infinite;position:relative}
+.big-timer{max-width:820px;margin:0 auto 220px;padding:36px;background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;text-align:center;border-radius:36px;box-shadow:0 30px 70px rgba(30,58,138,.45);animation:pulseBlue 1.6s infinite;position:relative}
 .big-timer h3{font-size:1.8rem;margin-bottom:12px}
 .big-timer span{font-size:2.6rem;font-weight:900}
 .big-timer .disclaimer{font-size:1rem;color:#dbeafe;margin-top:12px}
@@ -163,7 +163,7 @@ function formatTime(ms,showHours){
 function updateTimer(end,isPromo){
   const rem=end-Date.now();
   timerTop.textContent=formatTime(rem,isPromo?false:true);
-  timerPlans.textContent=formatTime(rem,isPromo?false:true || !isPromo);
+  timerPlans.textContent=formatTime(rem,isPromo?false:true);
 }
 
 function startTimer(end,isPromo){
@@ -174,14 +174,14 @@ function startTimer(end,isPromo){
       clearInterval(interval);
       if(isPromo){
         promoText.textContent="PROMOÇÃO ENCERRADA ";
-        bigTimerCopy.textContent="Nova oferta em:"; // mensagem cooldown
+        bigTimerCopy.textContent="Nova oferta em:"; 
         const cooldownEnd=Date.now()+COOLDOWN;
         localStorage.setItem('timerEnd',cooldownEnd);
         localStorage.setItem('isPromo','false');
         startTimer(cooldownEnd,false);
       } else {
         promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
-        bigTimerCopy.textContent="Oferta especial disponível por:"; // mensagem promo
+        bigTimerCopy.textContent="Oferta especial disponível por:";
         const promoEnd=Date.now()+PROMO;
         localStorage.setItem('timerEnd',promoEnd);
         localStorage.setItem('isPromo','true');
@@ -194,34 +194,41 @@ function startTimer(end,isPromo){
   },1000);
 }
 
-// Inicialização persistente
-let storedEnd=localStorage.getItem('timerEnd');
-let storedPromo=localStorage.getItem('isPromo');
-let endTime,isPromo;
+// Inicialização persistente com textos corretos
+let storedEnd = localStorage.getItem('timerEnd');
+let storedPromo = localStorage.getItem('isPromo');
+let endTime, isPromo;
 
-if(storedEnd && storedPromo){
-  endTime=parseInt(storedEnd);
-  isPromo=storedPromo==='true';
-  if(endTime-Date.now()<=0){
-    if(isPromo){
-      promoText.textContent="PROMOÇÃO ENCERRADA ";
-      bigTimerCopy.textContent="Nova oferta em:";
-      endTime=Date.now()+COOLDOWN;
-      isPromo=false;
+if (storedEnd && storedPromo) {
+  endTime = parseInt(storedEnd);
+  isPromo = storedPromo === 'true';
+  const remaining = endTime - Date.now();
+  if (remaining <= 0) {
+    if (isPromo) {
+      isPromo = false;
+      endTime = Date.now() + COOLDOWN;
     } else {
-      promoText.textContent="PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
-      bigTimerCopy.textContent="Oferta especial disponível por:";
-      endTime=Date.now()+PROMO;
-      isPromo=true;
+      isPromo = true;
+      endTime = Date.now() + PROMO;
     }
   }
 } else {
-  endTime=Date.now()+PROMO;
-  isPromo=true;
+  endTime = Date.now() + PROMO;
+  isPromo = true;
 }
-localStorage.setItem('timerEnd',endTime);
-localStorage.setItem('isPromo',isPromo);
-startTimer(endTime,isPromo);
+
+localStorage.setItem('timerEnd', endTime);
+localStorage.setItem('isPromo', isPromo);
+
+if (isPromo) {
+  promoText.textContent = "PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO ";
+  bigTimerCopy.textContent = "Oferta especial disponível por:";
+} else {
+  promoText.textContent = "PROMOÇÃO ENCERRADA ";
+  bigTimerCopy.textContent = "Nova oferta em:";
+}
+
+startTimer(endTime, isPromo);
 
 // Fade topo ao scroll
 new IntersectionObserver(entries=>{
