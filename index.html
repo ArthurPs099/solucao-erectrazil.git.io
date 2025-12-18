@@ -261,7 +261,7 @@
       <a href="#planos" class="cta">Ver opções de tratamento</a>
     </div>
     <div class="media">
-      <img src="erectazil-produto-1.png" alt="Erectazil - Frasco do produto" />
+      <div id="reviews" style="display:grid;gap:18px;"></div>
     </div>
   </section>
 
@@ -395,62 +395,114 @@
   <!-- ANIMAÇÃO NO SCROLL -->
   <script>
   // =============================
-  // TIMER PERSISTENTE + SCROLL REVEAL (CORRIGIDO)
+  // SCROLL REVEAL + TIMER PROFISSIONAL (2 FASES)
+  // FASE 1: Promoção Relâmpago (10 min)
+  // FASE 2: Promoção Encerrada + Reabertura em 12h
   // =============================
-
   document.addEventListener('DOMContentLoaded', () => {
 
     /* ===== SCROLL ANIMATION ===== */
     const sections = document.querySelectorAll('.section');
-
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible'));
+    }, { threshold: 0.25 });
     sections.forEach(section => observer.observe(section));
 
-    /* ===== TIMER PERSISTENTE ===== */
-    const DURATION = 10 * 60; // 10 minutos
-    const STORAGE_KEY = 'erectazil_promo_timer_end';
+    /* ===== TIMER PROFISSIONAL ===== */
+    const PROMO_DURATION = 10 * 60;        // 10 minutos
+    const COOLDOWN_DURATION = 12 * 60 * 60; // 12 horas
+
+    const STORAGE_KEY = 'erectazil_promo_state';
 
     const topEl = document.getElementById('countdown-top');
     const plansEl = document.getElementById('countdown-plans');
+    const barText = document.getElementById('urgency-text');
 
-    let endTime = localStorage.getItem(STORAGE_KEY);
+    let state = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-    if (!endTime) {
-      endTime = Date.now() + DURATION * 1000;
-      localStorage.setItem(STORAGE_KEY, endTime);
+    if (!state) {
+      state = {
+        phase: 'promo', // promo | cooldown
+        endTime: Date.now() + PROMO_DURATION * 1000
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function updateCountdown() {
+    function formatTime(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      if (h > 0) return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function updateTimer() {
       const now = Date.now();
-      const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
-
-      const minutes = Math.floor(remaining / 60);
-      const seconds = remaining % 60;
-
-      const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-      if (topEl) topEl.textContent = formatted;
-      if (plansEl) plansEl.textContent = formatted;
+      let remaining = Math.max(0, Math.floor((state.endTime - now) / 1000));
 
       if (remaining <= 0) {
-        if (topEl) topEl.textContent = 'ENCERRADO';
-        if (plansEl) plansEl.textContent = 'ENCERRADO';
-        clearInterval(timerInterval);
+        if (state.phase === 'promo') {
+          // Transição para COOLDOWN
+          state.phase = 'cooldown';
+          state.endTime = Date.now() + COOLDOWN_DURATION * 1000;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          remaining = COOLDOWN_DURATION;
+        } else {
+          // Reabre nova promoção
+          state.phase = 'promo';
+          state.endTime = Date.now() + PROMO_DURATION * 1000;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          remaining = PROMO_DURATION;
+        }
+      }
+
+      const text = formatTime(remaining);
+
+      if (state.phase === 'promo') {
+        if (barText) barText.textContent = 'PROMOÇÃO RELÂMPAGO · 10% DE DESCONTO';
+        if (topEl) topEl.textContent = text;
+        if (plansEl) plansEl.textContent = text;
+      } else {
+        if (barText) barText.textContent = 'PROMOÇÃO ENCERRADA · Nova oferta em';
+        if (topEl) topEl.textContent = text;
+        if (plansEl) plansEl.textContent = text;
       }
     }
 
-    updateCountdown();
-    const timerInterval = setInterval(updateCountdown, 1000);
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    /* ===== AVALIAÇÕES ALEATÓRIAS ===== */
+    const reviewsData = [
+      { initials:'SC', name:'Sandro C*****', stars:4, text:'Excelente produto! Obtive resultados com menos de 3 semanas e estou me sentindo muito mais viril.' },
+      { initials:'AS', name:'Alexandre S****', stars:5, text:'Minha esposa não permite mais eu ficar um mês sem esse produto 😂😂😂 Recomendo!!!' },
+      { initials:'OF', name:'Onofre F*****', stars:4, text:'Não botava fé, comprei descrente, mas com +/- 1 mês e meio tomando regularmente voltei completamente à ativa! Recomendo e já encomendei mais!' },
+      { initials:'RM', name:'Rosa Maria F*****', stars:5, text:'Comprei pro meu marido faz 6 meses, desde o segundo mês ele tem dado tudo de si, muito satisfeita com o resultado!' },
+      { initials:'JG', name:'José Antônio G*****', stars:4, text:'Para mim, demorou para fazer efeito, mas quando fez, me senti um jovem de 18 anos de novo, melhor decisão da minha vida!!!' },
+      { initials:'LV', name:'Lucas V*****', stars:5, text:'Barato, eficaz, e com efeito rápido. Nunca mais precisei de viagra na minha vida, Nota 10!!!!' },
+      { initials:'MS', name:'Mariana S*****', stars:5, text:'Comprei para o meu esposo depois de muita insistência minha 😅 Hoje ele mesmo não fica sem. A confiança dele mudou completamente, estamos muito felizes com o resultado!' },
+      { initials:'CM', name:'Carlos M*****', stars:4, text:'No começo fiquei desconfiado, mas resolvi testar. Em poucas semanas já senti diferença real no desempenho e na disposição. Produto sério e eficiente.' },
+      { initials:'PA', name:'Patrícia A*****', stars:5, text:'Adquiri para meu marido e foi uma das melhores decisões que tomei. Ele está mais confiante, bem-humorado e satisfeito. Resultado excelente!' },
+      { initials:'FR', name:'Fernando R*****', stars:4, text:'Não é milagre, mas funciona de verdade com o uso contínuo. Hoje me sinto muito melhor do que antes, inclusive na autoestima. Recomendo.' },
+      { initials:'JC', name:'Juliana C*****', stars:5, text:'Meu marido estava desanimado, e isso afetava até nosso relacionamento. Depois do Erectazil, a mudança foi nítida. Valeu cada centavo.' }
+    ];
+
+    function shuffle(arr){ return arr.sort(() => Math.random() - 0.5); }
+    const count = Math.random() > 0.5 ? 4 : 3;
+    const selected = shuffle([...reviewsData]).slice(0, count);
+
+    const container = document.getElementById('reviews');
+    if (container) {
+      container.innerHTML = selected.map(r => `
+        <div style="background:#ffffff;border-radius:22px;padding:18px 20px;box-shadow:0 18px 40px rgba(0,0,0,0.12);display:flex;gap:14px;">
+          <div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">${r.initials}</div>
+          <div>
+            <strong>${r.name}</strong>
+            <div style="color:#f59e0b;">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+            <p style="margin-top:6px;color:#334155;">${r.text}</p>
+          </div>
+        </div>`).join('');
+    }
 
   });
 </script>
